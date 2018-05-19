@@ -48,19 +48,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\AvailableBookListBuilder.cs" />
+    <Compile Include="Builders\BookListFiltringByData.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BookRepository.cs" />
-    <Compile Include="Services\BookService.cs" />
+    <Compile Include="Services\IPersonRepository.cs" />
+    <Compile Include="Services\LibraryService.cs" />
     <Compile Include="Services\BookValidator.cs" />
     <Compile Include="Services\IBookRepository.cs" />
     <Compile Include="Builders\NotBorrowedBooksBuilder.cs" />
     <Compile Include="Builders\PeopleListWithBorrowedBooksBuilder.cs" />
     <Compile Include="Services\IBookValidator.cs" />
+    <Compile Include="Services\IPersonValidator.cs" />
     <Compile Include="Services\PersonRepository.cs" />
     <Compile Include="Services\PersonService.cs" />
+    <Compile Include="Services\PersonValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

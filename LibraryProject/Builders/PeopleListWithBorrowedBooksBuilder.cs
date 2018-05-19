@@ -10,20 +10,23 @@ namespace LibraryProject.Builders
 {
     class PeopleListWithBorrowedBooksBuilder
     {
+        private readonly IPersonRepository _personRepository;
         private readonly IBookRepository _bookRepository;
 
-        public PeopleListWithBorrowedBooksBuilder(IBookRepository bookRepository)
+        public PeopleListWithBorrowedBooksBuilder(IPersonRepository personRepository,IBookRepository bookRepository)
         {
+            _personRepository = personRepository;
             _bookRepository = bookRepository;
         }
-
-
+        
         public string BuildBorrowedBookList()
         {
             var borrowedBookList = new StringBuilder();
-            var books = _bookRepository.GetAllBooks().Where(x => x.Person != null);
 
-
+            foreach (var person in _personRepository.GetAllPeople().Where(x=>x.BorrowedBooks.Count()>0))
+            {
+                borrowedBookList.AppendLine($"{person.FirstName} {person.LastName} - {person.BorrowedBooks.Count()}");
+            }
 
             return borrowedBookList.ToString();
         }

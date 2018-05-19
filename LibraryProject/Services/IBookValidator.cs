@@ -1,4 +1,5 @@
 ﻿using LibraryProject.Model;
+using System.Collections.Generic;
 
 namespace LibraryProject.Services
 {
@@ -6,5 +7,7 @@ namespace LibraryProject.Services
     {
         bool Validate(Book book);
         bool IsElevenDigitsInISBNNumber(string iSBNNumber);
+        bool IsBookNameInBooks(string bookName, List<Book> bookList);
+        bool IsBookInLibrary(string bookName, List<Book> bookList);
     }
 }

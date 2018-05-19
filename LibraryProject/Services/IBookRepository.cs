@@ -6,9 +6,9 @@ namespace LibraryProject.Services
     interface IBookRepository
     {
         void AddBook(Book book);
-        void BorrowBook(Book book, Person person);
+        void UpdateBooks(Book book);
         Book GetBook(string bookData);
         IEnumerable<Book> GetAllBooks();
-        void RemoveBook(Book book);
+        void RemoveBook(string bookName);
     }
 }

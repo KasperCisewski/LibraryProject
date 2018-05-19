@@ -25,5 +25,29 @@ namespace LibraryProject.Services
             }
             return false;
         }
+        public bool IsBookNameInBooks(string bookName,List<Book> bookList)
+        {
+            if(bookList.Any(x=>x.BookName==bookName))
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool IsBookNameInAvailableBooks(string bookName, List<Book> bookList)
+        {
+            if(bookList.Any(x=>(x.BookName==bookName)&&(x.IdPerson==null)))
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool IsBookInLibrary(string bookName,List<Book> bookList)
+        {
+            if (bookList.Any(x => (x.BookName == bookName) && (x.IdPerson == null)))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

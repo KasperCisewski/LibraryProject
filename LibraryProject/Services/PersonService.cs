@@ -9,17 +9,6 @@ namespace LibraryProject.Services
 {
     class PersonService
     {
-        public IEnumerable<Person> GetAllPeople()
-        {
-            var people = new List<Person>();
-
-
-
-            return people;
-        }
-        public void AddPersonToList()
-        {
-
-        }
+    
     }
 }

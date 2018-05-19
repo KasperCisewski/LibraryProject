@@ -14,9 +14,11 @@ namespace LibraryProject
     class Program
     {
         private static BookRepository _bookRepository;
-        private static BookService _bookService;
+        private static LibraryService _libraryService;
         private static PeopleListWithBorrowedBooksBuilder _peopleListWithBorrowedBooksBuilder;
         private static NotBorrowedBooksBuilder _notBorrowedBooksBuilder;
+        private static BookListFiltringByData _bookListFiltringByData;
+        private static AvailableBookListBuilder _availableBookListBuilder;
 
         static void Main(string[] args)
         {         
@@ -25,9 +27,11 @@ namespace LibraryProject
             else
                 _bookRepository = new BookRepository(Path.Combine(Environment.CurrentDirectory)+"ListOfObject.json"); // lub  Environment.CurrentDirectory,   @"..\..\..\Project2\xml\File.xml" );
 
-            _bookService = new BookService(_bookRepository, new BookValidator());
-            _peopleListWithBorrowedBooksBuilder=new PeopleListWithBorrowedBooksBuilder(_bookRepository);
+            _libraryService = new LibraryService(_bookRepository, new BookValidator(),new PersonRepository(),new PersonValidator());
+            _peopleListWithBorrowedBooksBuilder=new PeopleListWithBorrowedBooksBuilder(new PersonRepository(),_bookRepository);
             _notBorrowedBooksBuilder = new NotBorrowedBooksBuilder(_bookRepository);
+            _bookListFiltringByData = new BookListFiltringByData(_bookRepository);
+            _availableBookListBuilder = new AvailableBookListBuilder(_bookRepository);
             Menu();
 
             return;
@@ -50,7 +54,7 @@ namespace LibraryProject
                         RemoveBookFromCatalog();
                         break;
                     case 3:
-                        SearchingBookByName();
+                        SearchingBookByNameAuthorISBNNumber();
                         break;
                     case 4:
                         SearchingBookByNotBorrowedInLastTime();
@@ -89,27 +93,63 @@ namespace LibraryProject
             string ISBNNumber = Console.ReadLine();
             var book = new Book(bookName, surname, ISBNNumber);
 
-            Console.WriteLine(_bookService.TakeAndTrySaveBook(book));       
+            Console.WriteLine(_libraryService.TrySaveBook(book));       
         }
+
         static void RemoveBookFromCatalog()
         {
-            
+            Console.WriteLine("It`s list of books");
+            Console.Write(_notBorrowedBooksBuilder.BuildNotBorrowedBookList(0));
+            Console.WriteLine("Which book, you want to delete? Give precise bookname like on the list.");
+            string bookName = Console.ReadLine();
+
+            Console.WriteLine(_libraryService.TryRemoveBook(bookName));
         }
-        static void SearchingBookByName()
+
+        static void SearchingBookByNameAuthorISBNNumber()
         {
+            Console.WriteLine("Write bookName, author or ISBN number of book which you are looking for");
+            string dataDescribedBook = Console.ReadLine();
+
+            Console.Write(_bookListFiltringByData.BuildFiltredBookList(dataDescribedBook));
 
         }
+
         static void SearchingBookByNotBorrowedInLastTime()
         {
+            Console.WriteLine("Give a number of weeks");
+            if(int.TryParse(Console.ReadLine(),out var numberOfWeeks))
+            {
+               Console.Write(_notBorrowedBooksBuilder.BuildNotBorrowedBookList(numberOfWeeks));
+            }
+            else
+            {
+                Console.WriteLine("Text was not a number" );
+            }
 
         }
+
         static void BorrowingBook()
         {
+            Console.WriteLine("Write Your name: ");
+            string firstName = Console.ReadLine();
+            Console.WriteLine("Write Your surname: ");
+            string lastName = Console.ReadLine();
+
+            Console.Write(_availableBookListBuilder.BuildAvailableBookList());
+
+            Console.WriteLine("Select a book from the list by name(First Column)");
+
+            string bookName = Console.ReadLine();
+
+            Console.Write(_libraryService.TryToBorrowBook(bookName, firstName, lastName));
 
         }
+
         static void ShowPeopleListWithHisBorrowedBooks()
         {
-
+            Console.WriteLine("The number of books borrowed by people: ");
+            Console.Write(_peopleListWithBorrowedBooksBuilder.BuildBorrowedBookList());
         }
 
     }

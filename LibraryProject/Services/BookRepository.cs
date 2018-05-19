@@ -24,11 +24,16 @@ namespace LibraryProject.Services
         {
           string jsonData = JsonConvert.SerializeObject(book);
 
-            File.WriteAllText(FilePath, jsonData);
+            File.AppendAllText(FilePath, "\n"+ jsonData);
+         
         }
-        public void RemoveBook(Book book)
+        public void RemoveBook(string bookName)
         {
+            var bookList = GetAllBooks().ToList();
+            bookList.RemoveAll(x => x.BookName == bookName);
+            bookList.OrderBy(x => x.BookName);
 
+            SaveBooksToFile(bookList);
         }
         public Book GetBook(string bookData)
         {
@@ -43,20 +48,31 @@ namespace LibraryProject.Services
             {
                 foreach (var line in File.ReadLines(FilePath))
                 {
+                    if(!string.IsNullOrWhiteSpace(line))
                     bookList.Add(JsonConvert.DeserializeObject<Book>(line));
                 }
             }
-
+            bookList.OrderBy(x => x.BookName);
             return bookList;
         }
 
     
-        public void BorrowBook(Book book,Person person)
+        public void UpdateBooks(Book book)
         {
-
+            var bookList = GetAllBooks().ToList();
+            bookList.RemoveAll(x => x.BookName == book.BookName);
+            bookList.Add(book);
+            SaveBooksToFile(bookList);
         }
-   
 
-      
+        private void SaveBooksToFile(List<Book> bookList)
+        {
+            List<string> jsonObjects = new List<string>();
+            foreach (var item in bookList)
+            {
+                jsonObjects.Add(JsonConvert.SerializeObject(item));
+            }
+            File.WriteAllLines(FilePath, jsonObjects);
+        }     
     }
 }

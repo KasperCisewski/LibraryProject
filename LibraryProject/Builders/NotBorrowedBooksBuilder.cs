@@ -21,7 +21,7 @@ namespace LibraryProject.Builders
         {
             var notBorrowedBookList = new StringBuilder();
 
-            var books = _bookRepository.GetAllBooks().Where(x => ((DateTime.Now - x.DateLastBorrow).TotalDays / 7) < numberOfWeeks);
+            var books = _bookRepository.GetAllBooks().Where(x => ((DateTime.Now - x.DateLastBorrow).TotalDays / 7) > numberOfWeeks);
 
             foreach (var item in books)
             {
