@@ -59,6 +59,7 @@ namespace LibraryProject.Services
                 {                 
                     person = allPeopleInLibrary.First(x => (x.FirstName == firstName && x.LastName == lastName));
                     book.IdPerson = person.PersonID;
+                    book.DateLastBorrow = DateTime.Now;
                     person.BorrowedBooks.Add(book);
                     _bookRepository.UpdateBooks(book);
                     _personRepository.UpdatePersonList(person);
@@ -68,6 +69,7 @@ namespace LibraryProject.Services
                 person= _personRepository.AddPersonToList(firstName,lastName,allPeopleInLibrary);
 
                 book.IdPerson = person.PersonID;
+                book.DateLastBorrow = DateTime.Now;
                 person.BorrowedBooks.Add(book);
                 _bookRepository.UpdateBooks(book);
                 _personRepository.UpdatePersonList(person);
