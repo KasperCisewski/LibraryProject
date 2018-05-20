@@ -22,11 +22,13 @@ namespace LibraryProject
         private static readonly BorrowedBookListBuilder _borrowedBookListBuilder = new BorrowedBookListBuilder();
 
         static void Main(string[] args)
-        {         
+        {
             if (args.Length > 0)
-                _bookRepository = new BookRepository(args[0]);
+            {
+               _bookRepository = new BookRepository(args[0]);
+            }
             else
-                _bookRepository = new BookRepository(Path.Combine(Environment.CurrentDirectory)+"ListOfObject.json"); // lub  Environment.CurrentDirectory,   @"..\..\..\Project2\xml\File.xml" );
+                _bookRepository = new BookRepository(Path.Combine(Environment.CurrentDirectory) + "ListOfObject.json"); // lub  Environment.CurrentDirectory,   @"..\..\..\Project2\xml\File.xml" );
 
             _libraryService = new LibraryService(_bookRepository, new BookValidator(),new PersonRepository(),new PersonValidator());
             _peopleListWithBorrowedBooksBuilder=new PeopleListWithBorrowedBooksBuilder(new PersonRepository(),_bookRepository);
@@ -176,4 +178,7 @@ namespace LibraryProject
         }
 
     }
+
 }
+
+

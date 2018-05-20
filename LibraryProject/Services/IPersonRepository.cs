@@ -3,7 +3,7 @@ using LibraryProject.Model;
 
 namespace LibraryProject.Services
 {
-    interface IPersonRepository
+    public interface IPersonRepository
     {
         Person AddPersonToList(string firstName,string lastName,List<Person> peopleList);
         IEnumerable<Person> GetAllPeople();

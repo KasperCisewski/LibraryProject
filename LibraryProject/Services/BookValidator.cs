@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace LibraryProject.Services
 {
-    class BookValidator : IBookValidator
+    public class BookValidator : IBookValidator
     {
         public bool Validate(Book book)
         {
-            if(IsElevenDigitsInISBNNumber(book.ISBNNumber))
+            if(IsThirteenDigitsInISBNNumber(book.ISBNNumber))
             {
                 return true;
             }
             return false;
         }
-        public bool IsElevenDigitsInISBNNumber(string iSBNNumber)
+        public bool IsThirteenDigitsInISBNNumber(string iSBNNumber)
         {
             if(iSBNNumber.Length==13)
             {

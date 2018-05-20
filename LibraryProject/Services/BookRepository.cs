@@ -7,10 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace LibraryProject.Services
 {
-    class BookRepository : IBookRepository
+    public class BookRepository : IBookRepository
     {
 
         public string FilePath { get; set; }
@@ -22,10 +24,22 @@ namespace LibraryProject.Services
 
         public void AddBook(Book book)
         {
-          string jsonData = JsonConvert.SerializeObject(book);
+            
+            if (FilePath.Contains(".json"))
+            {
+                string jsonData = JsonConvert.SerializeObject(book);
+                File.AppendAllText(FilePath, "\n" + jsonData);
+                return;
+            }
 
-            File.AppendAllText(FilePath, "\n"+ jsonData);
-         
+            Stream fs = new FileStream(FilePath, FileMode.Append);
+            XmlWriter writer = new XmlTextWriter(fs, Encoding.Unicode);
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Book));
+
+            xmlSerializer.Serialize(writer, book);
+
+
         }
         public void RemoveBook(string bookName)
         {
@@ -44,13 +58,23 @@ namespace LibraryProject.Services
         public IEnumerable<Book> GetAllBooks()
         {
             var bookList = new List<Book>();
-            using (StreamReader sr = new StreamReader(FilePath)) 
+            if (FilePath.Contains(".json"))
             {
-                foreach (var line in File.ReadLines(FilePath))
+                using (StreamReader sr = new StreamReader(FilePath))
                 {
-                    if(!string.IsNullOrWhiteSpace(line))
-                    bookList.Add(JsonConvert.DeserializeObject<Book>(line));
+                    foreach (var line in File.ReadLines(FilePath))
+                    {
+                        if (!string.IsNullOrWhiteSpace(line))
+                            bookList.Add(JsonConvert.DeserializeObject<Book>(line));
+                    }
                 }
+            }
+            else
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(Book));
+                Stream fs = new FileStream(FilePath, FileMode.Open);
+                XmlReader reader = XmlReader.Create(fs);
+                bookList = (List<Book>)serializer.Deserialize(reader);
             }
             bookList.OrderBy(x => x.BookName);
             return bookList;
@@ -67,12 +91,30 @@ namespace LibraryProject.Services
 
         private void SaveBooksToFile(List<Book> bookList)
         {
-            List<string> jsonObjects = new List<string>();
-            foreach (var item in bookList)
+            List<string> dataObjects = new List<string>();
+            if (FilePath.Contains(".json"))
             {
-                jsonObjects.Add(JsonConvert.SerializeObject(item));
+                foreach (var item in bookList)
+                {
+                    dataObjects.Add(JsonConvert.SerializeObject(item));
+                    File.WriteAllLines(FilePath, dataObjects);
+
+                }
             }
-            File.WriteAllLines(FilePath, jsonObjects);
+            else
+            {
+                Stream fs = new FileStream(FilePath, FileMode.Create);
+                XmlWriter writer = new XmlTextWriter(fs, Encoding.Unicode);
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(Book));
+
+                foreach(var book in bookList)
+                {
+                    xmlSerializer.Serialize(writer, book);
+                    fs = new FileStream(FilePath, FileMode.Append);
+                    writer = new XmlTextWriter(fs, Encoding.Unicode);
+                }
+            }
+            
         }     
     }
 }

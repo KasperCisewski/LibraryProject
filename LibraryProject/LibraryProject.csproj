@@ -65,7 +65,6 @@
     <Compile Include="Services\IBookValidator.cs" />
     <Compile Include="Services\IPersonValidator.cs" />
     <Compile Include="Services\PersonRepository.cs" />
-    <Compile Include="Services\PersonService.cs" />
     <Compile Include="Services\PersonValidator.cs" />
   </ItemGroup>
   <ItemGroup>

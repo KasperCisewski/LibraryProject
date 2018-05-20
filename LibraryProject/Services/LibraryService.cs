@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibraryProject.Services
 {
-    class LibraryService
+    public class LibraryService
     {
         private readonly IBookRepository _bookRepository;
         private readonly IBookValidator _bookValidator;
@@ -24,7 +24,7 @@ namespace LibraryProject.Services
 
         public string TrySaveBook(Book book)
         {
-            if (_bookValidator.IsElevenDigitsInISBNNumber(book.ISBNNumber))
+            if (_bookValidator.IsThirteenDigitsInISBNNumber(book.ISBNNumber))
             {
                 _bookRepository.AddBook(book);
                 return $"You added a book: {book.BookName}";

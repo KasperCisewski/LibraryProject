@@ -3,7 +3,7 @@ using LibraryProject.Model;
 
 namespace LibraryProject.Services
 {
-    interface IBookRepository
+    public interface IBookRepository
     {
         void AddBook(Book book);
         void UpdateBooks(Book book);

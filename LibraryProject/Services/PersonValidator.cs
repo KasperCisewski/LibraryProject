@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibraryProject.Services
 {
-    class PersonValidator : IPersonValidator
+    public class PersonValidator : IPersonValidator
     {
 
         public bool IsPersonInList(string firstName, string lastName,List<Person> peopleList)

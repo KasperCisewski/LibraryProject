@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibraryProject.Builders
 {
-    class BorrowedBookListBuilder
+    public class BorrowedBookListBuilder
     {
         public string BuildBorrowedBookList(Person person)
         {

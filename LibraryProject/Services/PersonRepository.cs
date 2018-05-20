@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LibraryProject.Services
 {
-    class PersonRepository : IPersonRepository
+    public class PersonRepository : IPersonRepository
     {
         private string FilePath { get; set; }
 
