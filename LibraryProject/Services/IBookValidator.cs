@@ -9,5 +9,6 @@ namespace LibraryProject.Services
         bool IsElevenDigitsInISBNNumber(string iSBNNumber);
         bool IsBookNameInBooks(string bookName, List<Book> bookList);
         bool IsBookInLibrary(string bookName, List<Book> bookList);
+        bool IsBookInPersonBorrowedList(string bookName, List<Book> bookList);
     }
 }

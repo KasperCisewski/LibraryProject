@@ -49,5 +49,13 @@ namespace LibraryProject.Services
             }
             return false;
         }
+        public bool IsBookInPersonBorrowedList(string bookName, List<Book> bookList)
+        {
+            if (bookList.Any(x => (x.BookName == bookName)))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

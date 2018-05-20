@@ -19,6 +19,7 @@ namespace LibraryProject
         private static NotBorrowedBooksBuilder _notBorrowedBooksBuilder;
         private static BookListFiltringByData _bookListFiltringByData;
         private static AvailableBookListBuilder _availableBookListBuilder;
+        private static readonly BorrowedBookListBuilder _borrowedBookListBuilder = new BorrowedBookListBuilder();
 
         static void Main(string[] args)
         {         
@@ -65,6 +66,9 @@ namespace LibraryProject
                     case 6:
                         ShowPeopleListWithHisBorrowedBooks();
                         break;
+                    case 7:
+                        GivingBackBook();
+                        break;
                     default:
                         Console.WriteLine("your number isn`t match");
                         break;
@@ -80,6 +84,7 @@ namespace LibraryProject
             Console.WriteLine("4. Searching book which have not been borrower for weeks ");
             Console.WriteLine("5. Borrowing a book ");
             Console.WriteLine("6. Showing list of people which have borrowerd books ");
+            Console.WriteLine("7. Giving back book to library");
             Console.WriteLine("q. Quit ");
         }
 
@@ -150,6 +155,24 @@ namespace LibraryProject
         {
             Console.WriteLine("The number of books borrowed by people: ");
             Console.Write(_peopleListWithBorrowedBooksBuilder.BuildBorrowedBookList());
+        }
+        static void GivingBackBook()
+        {
+            Console.WriteLine("Write your name: ");
+            string firstName = Console.ReadLine();
+            Console.WriteLine("Write you Lastname: ");
+            string lastName = Console.ReadLine();
+            var person = _libraryService.TakePersonIfExist(firstName, lastName);
+            if(person!=null)
+            {
+                Console.WriteLine("There is your borrowed book list");
+                Console.WriteLine(_borrowedBookListBuilder.BuildBorrowedBookList(person));
+                Console.WriteLine("Which book you want to give back?");
+                string bookName = Console.ReadLine();
+                Console.WriteLine(_libraryService.TryToGiveBackBook(person,bookName));
+                return;
+            }
+            Console.WriteLine("We don`t  have a person like you in our data bases");
         }
 
     }

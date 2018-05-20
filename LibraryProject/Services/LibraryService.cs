@@ -31,6 +31,7 @@ namespace LibraryProject.Services
             }
             return "Is something wrong with ISBN number";
         }
+
         public string TryRemoveBook(string bookName)
         {
             var books = _bookRepository.GetAllBooks().ToList();
@@ -77,6 +78,30 @@ namespace LibraryProject.Services
                 return $"Create new user, and he borrows his first book, congratulation {firstName}!";
             }
             return $"{bookName} is not exist in List of books, next time, you should write a good book name";
+        }
+
+        public Person TakePersonIfExist(string firstName,string lastName)
+        {
+            var person = _personRepository.GetAllPeople().ToList().First(x => (x.FirstName == firstName) && (x.LastName == lastName));
+            if (person!=null)
+            {
+                return person;
+            }
+            return person;
+        }
+
+        public string TryToGiveBackBook(Person person,string bookName)
+        {
+            if(_bookValidator.IsBookInPersonBorrowedList(bookName,person.BorrowedBooks))
+            {
+                var book = person.BorrowedBooks.First(x => x.BookName == bookName);
+                person.BorrowedBooks.RemoveAll(x => x.BookName == book.BookName);
+                book.IdPerson = null;
+                _bookRepository.UpdateBooks(book);
+                _personRepository.UpdatePersonList(person);
+                return $"We removed {bookName} from your borrowed book list";
+            }
+            return $"{person.FirstName} you dont have {bookName} in your borrowed book";
         }
     }
 }

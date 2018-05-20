@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Builders\AvailableBookListBuilder.cs" />
     <Compile Include="Builders\BookListFiltringByData.cs" />
+    <Compile Include="Builders\BorrowedBookListBuilder.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="Program.cs" />
