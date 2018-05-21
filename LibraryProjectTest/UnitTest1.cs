@@ -60,7 +60,7 @@ namespace LibraryProjectTest
             Assert.AreEqual(expected, actual);
         }
         [TestMethod]
-        public void SeconBorrwerBookBuilderTest()
+        public void SecondBorrwerBookBuilderTest()
         {
             var person = new Person(0, "kasper", "cisewski");
             var book = new Book("znak", "gulczynski", "1234567891234");
