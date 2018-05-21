@@ -49,12 +49,24 @@ namespace LibraryProjectTest
         }
 
         [TestMethod]
-        public void TestMethod()
+        public void FirstBorrowedBookBuilderTest()
         {
             
             var person = new Person(0, "kasper", "cisewski");
             BorrowedBookListBuilder borrowedBookListBuilder = new BorrowedBookListBuilder();
             var expected = "";
+            var actual = borrowedBookListBuilder.BuildBorrowedBookList(person);
+
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void SeconBorrwerBookBuilderTest()
+        {
+            var person = new Person(0, "kasper", "cisewski");
+            var book = new Book("znak", "gulczynski", "1234567891234");
+            person.BorrowedBooks.Add(book);
+            BorrowedBookListBuilder borrowedBookListBuilder = new BorrowedBookListBuilder();
+            var expected = "znak - gulczynski - 1234567891234\r\n";
             var actual = borrowedBookListBuilder.BuildBorrowedBookList(person);
 
             Assert.AreEqual(expected, actual);
