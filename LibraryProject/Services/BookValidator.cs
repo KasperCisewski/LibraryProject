@@ -11,13 +11,13 @@ namespace LibraryProject.Services
     {
         public bool Validate(Book book)
         {
-            if(IsThirteenDigitsInISBNNumber(book.ISBNNumber))
+            if(HasThirteenDigitsInISBNNumber(book.ISBNNumber))
             {
                 return true;
             }
             return false;
         }
-        public bool IsThirteenDigitsInISBNNumber(string iSBNNumber)
+        public bool HasThirteenDigitsInISBNNumber(string iSBNNumber)
         {
             if(iSBNNumber.Length==13)
             {

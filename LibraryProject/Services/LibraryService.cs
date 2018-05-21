@@ -24,12 +24,12 @@ namespace LibraryProject.Services
 
         public string TrySaveBook(Book book)
         {
-            if (_bookValidator.IsThirteenDigitsInISBNNumber(book.ISBNNumber))
+            if (_bookValidator.HasThirteenDigitsInISBNNumber(book.ISBNNumber))
             {
                 _bookRepository.AddBook(book);
                 return $"You added a book: {book.BookName}";
             }
-            return "Is something wrong with ISBN number";
+            return "Something is wrong with ISBN number";
         }
 
         public string TryRemoveBook(string bookName)
@@ -44,7 +44,7 @@ namespace LibraryProject.Services
                 }
                 return $"{bookName} is borrowed by someone, it cann`t be removed now";
             }
-            return $"{bookName} is not exist in List of books, next time, you should write a good book name";
+            return $"{bookName} does not exist in List of books, next time, you should write a good book name";
         }
 
         public string TryToBorrowBook(string bookName,string firstName,string lastName)
@@ -77,7 +77,7 @@ namespace LibraryProject.Services
                 
                 return $"Create new user, and he borrows his first book, congratulation {firstName}!";
             }
-            return $"{bookName} is not exist in List of books, next time, you should write a good book name";
+            return $"{bookName} does not exist in List of books, next time, you should write a good book name";
         }
 
         public Person TakePersonIfExist(string firstName,string lastName)

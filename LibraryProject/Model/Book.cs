@@ -20,7 +20,6 @@ namespace LibraryProject.Model
             BookName = bookName;
             AuthorSurname = authorSurname;
             ISBNNumber = iSBNNumber;
-            IdPerson = null;
         }
     }
 }

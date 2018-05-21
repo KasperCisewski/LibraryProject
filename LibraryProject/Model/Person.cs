@@ -20,7 +20,6 @@ namespace LibraryProject.Model
             FirstName = firstName;
             LastName = lastName;
             BorrowedBooks = new List<Book>();
-
         }
     }
 }

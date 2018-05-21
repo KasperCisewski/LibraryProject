@@ -20,9 +20,9 @@ namespace LibraryProject.Builders
         {
             var avaiableBookList = new StringBuilder();
 
-            var avaiableBooks = _bookRepository.GetAllBooks().Where(x => x.IdPerson == null);
+            var availableBooks = _bookRepository.GetAllBooks().Where(x => x.IdPerson == null);
 
-            foreach (var book in avaiableBooks)
+            foreach (var book in availableBooks)
             {
                 avaiableBookList.AppendLine($"{book.BookName} - {book.AuthorSurname} - {book.ISBNNumber}");
             }
